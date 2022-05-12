@@ -1,0 +1,12 @@
+C:\Users\nqdat\Desktop\employee-management\source-code\back-end\DA\bin\Debug\net5.0\DAL.deps.json
+C:\Users\nqdat\Desktop\employee-management\source-code\back-end\DA\bin\Debug\net5.0\DAL.dll
+C:\Users\nqdat\Desktop\employee-management\source-code\back-end\DA\bin\Debug\net5.0\DAL.pdb
+C:\Users\nqdat\Desktop\employee-management\source-code\back-end\DA\obj\Debug\net5.0\DAL.csproj.AssemblyReference.cache
+C:\Users\nqdat\Desktop\employee-management\source-code\back-end\DA\obj\Debug\net5.0\DAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\nqdat\Desktop\employee-management\source-code\back-end\DA\obj\Debug\net5.0\DAL.AssemblyInfoInputs.cache
+C:\Users\nqdat\Desktop\employee-management\source-code\back-end\DA\obj\Debug\net5.0\DAL.AssemblyInfo.cs
+C:\Users\nqdat\Desktop\employee-management\source-code\back-end\DA\obj\Debug\net5.0\DAL.csproj.CoreCompileInputs.cache
+C:\Users\nqdat\Desktop\employee-management\source-code\back-end\DA\obj\Debug\net5.0\DAL.dll
+C:\Users\nqdat\Desktop\employee-management\source-code\back-end\DA\obj\Debug\net5.0\refint\DAL.dll
+C:\Users\nqdat\Desktop\employee-management\source-code\back-end\DA\obj\Debug\net5.0\DAL.pdb
+C:\Users\nqdat\Desktop\employee-management\source-code\back-end\DA\obj\Debug\net5.0\ref\DAL.dll

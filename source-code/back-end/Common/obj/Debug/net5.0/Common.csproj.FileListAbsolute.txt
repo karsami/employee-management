@@ -1,0 +1,14 @@
+C:\Users\nqdat\Desktop\employee-management\source-code\back-end\Common\bin\Debug\net5.0\Common.deps.json
+C:\Users\nqdat\Desktop\employee-management\source-code\back-end\Common\bin\Debug\net5.0\Common.dll
+C:\Users\nqdat\Desktop\employee-management\source-code\back-end\Common\bin\Debug\net5.0\Common.pdb
+C:\Users\nqdat\Desktop\employee-management\source-code\back-end\Common\obj\Debug\net5.0\Common.csproj.AssemblyReference.cache
+C:\Users\nqdat\Desktop\employee-management\source-code\back-end\Common\obj\Debug\net5.0\Common.Properties.Resources.resources
+C:\Users\nqdat\Desktop\employee-management\source-code\back-end\Common\obj\Debug\net5.0\Common.csproj.GenerateResource.cache
+C:\Users\nqdat\Desktop\employee-management\source-code\back-end\Common\obj\Debug\net5.0\Common.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\nqdat\Desktop\employee-management\source-code\back-end\Common\obj\Debug\net5.0\Common.AssemblyInfoInputs.cache
+C:\Users\nqdat\Desktop\employee-management\source-code\back-end\Common\obj\Debug\net5.0\Common.AssemblyInfo.cs
+C:\Users\nqdat\Desktop\employee-management\source-code\back-end\Common\obj\Debug\net5.0\Common.csproj.CoreCompileInputs.cache
+C:\Users\nqdat\Desktop\employee-management\source-code\back-end\Common\obj\Debug\net5.0\Common.dll
+C:\Users\nqdat\Desktop\employee-management\source-code\back-end\Common\obj\Debug\net5.0\refint\Common.dll
+C:\Users\nqdat\Desktop\employee-management\source-code\back-end\Common\obj\Debug\net5.0\Common.pdb
+C:\Users\nqdat\Desktop\employee-management\source-code\back-end\Common\obj\Debug\net5.0\ref\Common.dll
