@@ -1,0 +1,19 @@
+<div class="content-block">
+    <h2>Cơ cấu tổ chức</h2>
+    <dx-tree-list id="tree-list-organization" [dataSource]="dataSource"
+        [rootValue]="'00000000-0000-0000-0000-000000000000'" keyExpr="OrganizationUnitID" parentIdExpr="ParentID"
+        [showRowLines]="true" [showBorders]="true" [columnAutoWidth]="true">
+
+        <!-- columns -->
+        <dxi-column dataField="OrganizationUnitName" caption="Tên cơ cấu tổ chức">
+            <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="Address" caption="Địa chỉ">
+        </dxi-column>
+        <dxi-column dataField="Description" caption="Mô tả"></dxi-column>
+
+        <!-- options -->
+        <dxo-editing mode="row" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true"></dxo-editing>
+        <dxo-search-panel [visible]="true" [width]="200"></dxo-search-panel>
+    </dx-tree-list>
+</div>

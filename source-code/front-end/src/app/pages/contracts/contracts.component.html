@@ -1,0 +1,52 @@
+<div class="content-block">
+    <h2>Hợp đồng</h2>
+    <dx-data-grid id="grid-contracts" class="dx-card wide-card" [dataSource]="dataSource" [showBorders]="true"
+        [focusedRowEnabled]="true" [columnAutoWidth]="true" [keyExpr]="'ContractID'" [allowColumnResizing]="true"
+        columnResizingMode="widget" (onSelectionChanged)="selectionChanged($event)"
+        (onRowInserting)="onInserting($event)">
+        <dxo-toolbar>
+            <dxi-item name="addRowButton">
+            </dxi-item>
+            <dxi-item location="after">
+                <dx-button (onClick)="deleteRecords()" [disabled]="!selectedItemKeys.length" icon="trash" text="">
+                </dx-button>
+            </dxi-item>
+            <dxi-item name="exportButton"></dxi-item>
+            <dxi-item name="searchPanel"></dxi-item>
+        </dxo-toolbar>
+
+        <!-- columns -->
+        <dxi-column dataField="ContractNo" caption="Số hợp đồng"></dxi-column>
+        <dxi-column dataField="ContractName" caption="Tên hợp động"></dxi-column>
+        <dxi-column dataField="FullName" caption="Họ và tên NLĐ"></dxi-column>
+        <dxi-column dataField="ContracType" caption="Loại hợp đồng">
+            <dxo-lookup [dataSource]="contractTypes" valueExpr="value" displayExpr="text">
+            </dxo-lookup>
+        </dxi-column>
+        <dxi-column dataField="FromDate" caption="Từ ngày" dataType="date" format="dd/MM/yyyy"></dxi-column>
+        <dxi-column dataField="ToDate" caption="Đến ngày" dataType="date" format="dd/MM/yyyy"></dxi-column>
+        <dxi-column dataField="BasicSalary" caption="Lương cơ bản" format="0.##" ></dxi-column>
+        <dxi-column dataField="InsuranceSalary" caption="Lương đóng thuế"></dxi-column>
+
+        <!-- option -->
+        <dxo-selection mode="multiple"></dxo-selection>
+
+        <dxo-paging [pageSize]="10"></dxo-paging>
+
+        <dxo-pager [displayMode]="''"></dxo-pager>
+
+        <dxo-load-panel [enabled]="true"></dxo-load-panel>
+
+        <dxo-filter-row [visible]="false"></dxo-filter-row>
+
+        <dxo-search-panel [visible]="true" [width]="300"></dxo-search-panel>
+
+        <dxo-export [enabled]="true"></dxo-export>
+
+        <dxo-editing [allowAdding]="true" [allowUpdating]="true" [allowDeleting]="true" mode="popup">
+            <dxo-popup title="Thông tin hợp đồng" [showTitle]="true">
+            </dxo-popup>
+        </dxo-editing>
+
+    </dx-data-grid>
+</div>

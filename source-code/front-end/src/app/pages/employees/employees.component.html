@@ -1,0 +1,73 @@
+<div class="content-block">
+    <h2>Nhân viên</h2>
+    <dx-data-grid id="grid-employee" class="dx-card wide-card" [dataSource]="dataSource" [showBorders]="false"
+        [focusedRowEnabled]="true" [columnAutoWidth]="false" [keyExpr]="'EmployeeID'" [allowColumnResizing]="true"
+        columnResizingMode="widget" (onSelectionChanged)="selectionChanged($event)" [columnMinWidth]="100"
+        (onRowUpdating)="onUpdating($event)">
+
+        <!-- toolbar -->
+        <dxo-toolbar>
+            <dxi-item name="addRowButton">
+            </dxi-item>
+            <dxi-item location="after">
+                <dx-button (onClick)="deleteRecords()" [disabled]="!selectedItemKeys.length" icon="trash">
+                </dx-button>
+            </dxi-item>
+
+            <dxi-item name="exportButton"></dxi-item>
+            <dxi-item name="searchPanel"></dxi-item>
+        </dxo-toolbar>
+
+        <!-- columns -->
+        <dxi-column dataField="EmployeeCode" caption="Mã nhân viên">
+            <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="FullName" caption="Họ và tên" width="150">
+            <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="GenderID" caption="Giới tính">
+            <dxo-lookup [dataSource]="gender" valueExpr="GenderID" displayExpr="GenderName">
+            </dxo-lookup>
+        </dxi-column>
+        <dxi-column dataField="Email" caption="Email" width="200">
+            <dxi-validation-rule type="required"></dxi-validation-rule>
+            <dxi-validation-rule type="email"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="BirthDay" caption="Ngày sinh" dataType="date" format="dd/MM/yyyy"></dxi-column>
+        <dxi-column dataField="Address" caption="Địa chỉ"></dxi-column>
+        <dxi-column dataField="JobPositionID" caption="Chức vụ">
+            <dxo-lookup [dataSource]="positions" valueExpr="JobPositionID" displayExpr="JobPositionName">
+            </dxo-lookup>
+        </dxi-column>
+        <dxi-column dataField="OrganizationUnitID" caption="Đơn vị công tác">
+            <dxo-lookup [dataSource]="organizationUnits" valueExpr="OrganizationUnitID"
+                displayExpr="OrganizationUnitName">
+            </dxo-lookup>
+        </dxi-column>
+        <dxi-column dataField="HireDate" caption="Ngày tuyển" dataType="date" format="dd/MM/yyyy"></dxi-column>
+
+        <!-- option -->
+        <dxo-selection mode="multiple"></dxo-selection>
+
+        <dxo-paging [pageSize]="10"></dxo-paging>
+
+        <dxo-pager [displayMode]="''"></dxo-pager>
+
+        <dxo-load-panel [enabled]="true"></dxo-load-panel>
+
+        <dxo-filter-row [visible]="true"></dxo-filter-row>
+
+        <dxo-search-panel [visible]="true" [width]="300"></dxo-search-panel>
+
+        <dxo-export [enabled]="true"></dxo-export>
+
+        <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+
+        <dxo-editing [allowAdding]="true" [allowUpdating]="true" [allowDeleting]="true" mode="popup"
+            [confirmDelete]="true">
+            <dxo-popup title="Thông tin nhân viên" [showTitle]="true">
+            </dxo-popup>
+        </dxo-editing>
+
+    </dx-data-grid>
+</div>

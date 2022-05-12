@@ -1,0 +1,12 @@
+<div class="overview-container content-block">
+  <h2>Tổng quan</h2>
+  <div class="dx-card responsive-paddings">
+    <div class="select-view-type">
+      <dx-select-box [dataSource]="listView" width="200" displayExpr="unit" valueExpr="value" [(value)]="viewType" (onSelectionChanged)="onTimeUnitChanged()"></dx-select-box>
+    </div>
+    <dx-chart id="chart" [dataSource]="dataSource">
+      <dxi-series argumentField="time" valueField="employee" name="Số lượng nhân sự" type="bar" color="#03a9f4">
+      </dxi-series>
+    </dx-chart>
+  </div>
+</div>
