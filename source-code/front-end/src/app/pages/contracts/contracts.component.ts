@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DxDataGridComponent } from 'devextreme-angular';
 import { RowInsertingEvent, RowUpdatingEvent } from 'devextreme/ui/data_grid';
 import { contracts } from 'src/app/shared/mock-data/mock-data';
+import { ContractService } from 'src/app/shared/services/api/contract.service';
 
 @Component({
   selector: 'app-contracts',
@@ -15,7 +16,7 @@ export class ContractsComponent implements OnInit {
   contractTypes: any[] = [];
   selectedItemKeys: any[] = [];
 
-  constructor() {
+  constructor(private _contractService: ContractService) {
     this.dataSource = contracts;
     this.contractTypes = [
       {
@@ -30,36 +31,52 @@ export class ContractsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadData();
   }
 
+  loadData() {
+    const sub = this._contractService.getData().subscribe(res => {
+      if (res && res.Success) {
+        this.dataSource = res.Data;
+      }
+      sub.unsubscribe();
+    })
+  }
 
   selectionChanged(data: any) {
     this.selectedItemKeys = data.selectedRowKeys;
   }
 
-   /**
-   * Hanlde call API insert employee info
+  /**
+  * Hanlde call API insert employee info
+  */
+  onInserting(event: RowInsertingEvent) {
+    const sub = this._contractService.insertData(event.data).subscribe(res => {
+      this.loadData();
+      sub.unsubscribe();
+    });
+  }
+
+  /**
+   * Handle call API update employee info
+   * @param event
    */
-    onInserting(event: RowInsertingEvent) {
-      console.log(event);
-    }
-  
-    /**
-     * Handle call API update employee info
-     * @param event
-     */
-    onUpdating(event: RowUpdatingEvent) {
-      console.log(event);
-    }
+  onUpdating(event: RowUpdatingEvent) {
+    const param = Object.assign(event.oldData, event.newData);
+    const sub = this._contractService.updateData(param).subscribe(res => {
+      this.loadData();
+      sub.unsubscribe();
+    });
+  }
 
   /**
    * Delete all data selected in grid
    */
-   deleteRecords() {
-    this.selectedItemKeys.forEach((key) => {
-      this.dataSource.splice(key, 1);
-    });
-    this.dataGrid.instance.refresh();
+  deleteRecords() {
+    this._contractService.deleteMultiple(this.selectedItemKeys).subscribe(res => {
+      this.loadData();
+      this.dataGrid.instance.refresh();
+    })
   }
 
 }

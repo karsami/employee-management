@@ -61,7 +61,6 @@ export class EmployeesComponent implements OnInit {
    * Hanlde call API insert employee info
    */
   onInserting(event: RowInsertingEvent) {
-    console.log(event);
     const sub = this._userService.insertData(event.data).subscribe(res => {
       if (res && res.Success) {
         this.loadData();

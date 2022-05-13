@@ -62,8 +62,8 @@ export const positions = [
     {
         JobPositionID: 2,
         JobPositionCode: 'VT0002',
-        JobPositionName: 'Bussiness Analyst',
-        OrganizationUnitID: '0217b3a3-902f-4dca-a3c5-86d6cb5a8e9f',
+        JobPositionName: 'HR',
+        OrganizationUnitID: '5620d644-8f91-4b96-9fe0-6736894fb42b',
         Description: 'Nhân viên phân tích nghiệp vụ thuộc lĩnh vực Quản trị điều hành doanh ngiệp'
     }
 ]

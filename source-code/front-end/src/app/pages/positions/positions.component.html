@@ -22,7 +22,7 @@
             <dxo-lookup [dataSource]="organizations" valueExpr="OrganizationUnitID" displayExpr="OrganizationUnitName">
             </dxo-lookup>
         </dxi-column>
-        <dxi-column dataField="Description" caption="Mô tả"></dxi-column>
+        <dxi-column dataField="Description" caption="Mô tả" [width]="300"></dxi-column>
 
         <!-- option -->
         <dxo-selection mode="multiple"></dxo-selection>
@@ -36,7 +36,7 @@
         <dxo-filter-row [visible]="true"></dxo-filter-row>
 
         <dxo-search-panel [visible]="true" [width]="300"></dxo-search-panel>
-
+        <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
         <dxo-export [enabled]="true"></dxo-export>
         <dxo-editing [allowAdding]="true" [allowUpdating]="true" [allowDeleting]="true" mode="popup">
             <dxo-popup title="Vị trí công việc" [showTitle]="true">

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DxDataGridComponent } from 'devextreme-angular';
 import { positions, organizationUnits } from 'src/app/shared/mock-data/mock-data';
+import { JobPositionService } from 'src/app/shared/services/api/job-position.service';
 @Component({
   selector: 'app-positions',
   templateUrl: './positions.component.html',
@@ -13,15 +14,24 @@ export class PositionsComponent implements OnInit {
   selectedItemKeys: any[] = [];
   organizations: any[] = [];
 
-  constructor() {
-    this.dataSource = positions;
+  constructor(private _positionService: JobPositionService) {
     this.organizations = organizationUnits;
   }
 
   ngOnInit(): void {
-
+    this.loadData();
   }
 
+  loadData() {
+    const sub = this._positionService.getData().subscribe(res => {
+      if (res && res.Success) {
+        this.dataSource = res.Data;
+      } else {
+        this.dataSource = positions;
+      }
+      sub.unsubscribe();
+    })
+  }
 
   /**
    * Handle get selected data key express
@@ -34,7 +44,10 @@ export class PositionsComponent implements OnInit {
    * Hanlde call API insert employee info
    */
   onInserting(event: any) {
-    console.log(event);
+    const sub = this._positionService.insertData(event.data).subscribe(res => {
+      this.loadData();
+      sub.unsubscribe();
+    });
   }
 
   /**
@@ -42,7 +55,11 @@ export class PositionsComponent implements OnInit {
    * @param event
    */
   onUpdating(event: any) {
-    console.log(event);
+    const param = Object.assign(event.oldData, event.newData);
+    const sub = this._positionService.updateData(param).subscribe(res => {
+      this.loadData();
+      sub.unsubscribe();
+    })
   }
 
 
@@ -50,11 +67,10 @@ export class PositionsComponent implements OnInit {
    * Delete all data selected in grid
    */
   deleteRecords() {
-    this.selectedItemKeys.forEach((key) => {
-      const index = this.dataSource.findIndex(item => item.JobPositionID == key);
-      this.dataSource.splice(index, 1);
-    });
-    this.dataGrid.instance.refresh();
+    this._positionService.deleteMultiple(this.selectedItemKeys).subscribe(res => {
+      this.loadData();
+      this.dataGrid.instance.refresh();
+    })
   }
 
 }
