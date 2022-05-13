@@ -4,8 +4,10 @@ using Model.ServiceResult;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.SqlTypes;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace BLL.Implement
@@ -28,7 +30,7 @@ namespace BLL.Implement
 
         public ServiceResult GetAllData()
         {
-            var sqlCommand = $"SELECT * FROM {_tableName} ORDER BY ModifiedDate DESC";
+            var sqlCommand = $"SELECT * FROM {_tableName}";
             var res = _baseDA.QueryUsingCommandText<T>(sqlCommand);
             if (res.FirstOrDefault() != null)
             {
@@ -61,8 +63,6 @@ namespace BLL.Implement
                     columnNameTxt += ",";
                 }
             }
-            paramNameTxt += ",@CreatedDate,@ModifiedDate";
-            columnNameTxt += ",CreatedDate,ModifiedDate";
             param.Add("@CreatedDate", DateTime.Now);
             param.Add("@ModifiedDate", DateTime.Now);
             sqlCommand = string.Format(sqlCommand, _tableName, columnNameTxt, paramNameTxt);
@@ -82,7 +82,9 @@ namespace BLL.Implement
         public ServiceResult UpdateData(T model)
         {
             var param = ToDicionary(model);
-            var sqlCommand = "UPDATE {0} SET {1} WHERE id = @id;";
+            var primaryKey = GetPrimaryKeyName();
+            var primaryKeyValue = model.GetType().GetProperty(primaryKey).GetValue(model, null);
+            var sqlCommand = "UPDATE {0} SET {1} WHERE " + $"{primaryKey} = {primaryKeyValue}";
             var length = param.Count;
             var updateParamTxt = string.Empty;
             for (int i = 0; i < length; i++)
@@ -90,7 +92,7 @@ namespace BLL.Implement
                 var item = param.ElementAt(i);
                 var paramName = item.Key;
 
-                if (paramName == "id")
+                if (paramName == primaryKey)
                 {
                     continue;
                 }
@@ -102,8 +104,8 @@ namespace BLL.Implement
                     updateParamTxt += ",";
                 }
             }
-            updateParamTxt += ", updated_at = @updated_at";
-            param.Add("@updated_at", DateTime.Now);
+            updateParamTxt += ", ModifiedDate = @ModifiedDate";
+            param.Add("@ModifiedDate", DateTime.Now);
             sqlCommand = string.Format(sqlCommand, _tableName, updateParamTxt);
             var res = _baseDA.ExecuteUsingCommandText(sqlCommand, param);
             _serviceResult.Data = res;
@@ -143,7 +145,8 @@ namespace BLL.Implement
         public ServiceResult DeleteMultipleData(List<int> ids)
         {
             var listId = string.Join(",", ids);
-            var sqlCommand = $"DELETE FROM {_tableName} WHERE id IN ({listId})";
+            var primaryKey = GetPrimaryKeyName();
+            var sqlCommand = $"DELETE FROM {_tableName} WHERE {primaryKey} IN ({listId})";
             var res = _baseDA.ExecuteUsingCommandText(sqlCommand);
             _serviceResult.Data = res;
             if (res > 0)
@@ -156,6 +159,26 @@ namespace BLL.Implement
 
             }
             return _serviceResult;
+        }
+
+        /// <summary>
+        /// Lấy tên của khoá chính được config trong model
+        /// </summary>
+        /// <returns></returns>
+        private string GetPrimaryKeyName()
+        {
+            var properties = typeof(T).GetProperties();
+
+            foreach (var property in properties)
+            {
+                var attribute = Attribute.GetCustomAttribute(property, typeof(KeyAttribute)) as KeyAttribute;
+
+                if (attribute != null)
+                {
+                    return property.Name;
+                }
+            }
+            return null;
         }
 
         /// <summary>

@@ -43,6 +43,9 @@ namespace EmployeeManagementAPI
             services.AddScoped<IBaseDA, BaseDA>();
             services.AddScoped(typeof(IBaseBL<>), typeof(BaseBL<>));
             services.AddScoped<IUserBL, UserBL>();
+            services.AddScoped<IJobPositionBL, JobPositionBL>();
+            services.AddScoped<IOrganizationUnitBL, OrganizationUnitBL>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "EmployeeManagementAPI", Version = "v1" });

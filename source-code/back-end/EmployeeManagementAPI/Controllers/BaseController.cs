@@ -46,15 +46,8 @@ namespace EmployeeManagementAPI.Controllers
         }
 
         [HttpPost("delete-multiple")]
-        public IActionResult DeleteMutiple([FromBody] List<T> listObj)
+        public IActionResult DeleteMutiple([FromBody] List<int> listID)
         {
-            var listID = new List<int>();
-            foreach (var item in listObj)
-            {
-                var id = item.GetType().GetProperty("Id").GetValue(item);
-
-                listID.Add((int)id);
-            }
             return Ok(_baseBL.DeleteMultipleData(listID));
         }
     }

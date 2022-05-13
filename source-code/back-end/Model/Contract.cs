@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
@@ -8,6 +9,7 @@ namespace Model
     [Table("contracts")]  
    public class Contract
     {
+        [Key]
         public int ContractID { get; set; }
         public string ContractNo { get; set; }
         public string ContractName { get; set; }

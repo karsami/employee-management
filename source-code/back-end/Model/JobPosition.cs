@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Model
 {
+    [Table("jobpositions")]
     public class JobPosition
     {
+        [Key]
         public int JobPositionID { get; set; }
         public string JobPositionCode { get; set; }
         public string JobPositionName { get; set; }
