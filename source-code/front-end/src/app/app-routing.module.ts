@@ -11,6 +11,8 @@ import { ContractsComponent } from './pages/contracts/contracts.component';
 import { ReportComponent } from './pages/report/report.component';
 import { PositionsComponent } from './pages/positions/positions.component';
 import { OrganizationsComponent } from './pages/organizations/organizations.component';
+import { UserRoleComponent } from './pages/user-role/user-role.component';
+import { RoleComponent } from './pages/role/role.component';
 
 const routes: Routes = [
   {
@@ -43,6 +45,14 @@ const routes: Routes = [
       {
         path: 'organizations',
         component: OrganizationsComponent
+      },
+      {
+        path: 'users',
+        component: UserRoleComponent
+      },
+      {
+        path: 'roles',
+        component: RoleComponent
       }
 
     ]
@@ -102,7 +112,9 @@ const routes: Routes = [
     ReportComponent,
     PositionsComponent,
     OrganizationsComponent,
-    ContractsComponent
+    ContractsComponent,
+    UserRoleComponent,
+    RoleComponent
   ]
 })
 export class AppRoutingModule { }

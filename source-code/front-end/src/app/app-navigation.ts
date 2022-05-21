@@ -19,6 +19,14 @@ export const navigation = [
     icon: 'preferences',
     items: [
       {
+        text: 'Người dùng',
+        path: '/setting/users'
+      },
+      {
+        text: 'Vai trò',
+        path: '/setting/roles'
+      },
+      {
         text: 'Vị trí công việc',
         path: '/setting/positions'
       },
@@ -26,7 +34,6 @@ export const navigation = [
         text: 'Cơ cấu tổ chức',
         path: '/setting/organizations'
       },
-
     ]
   }
 ];

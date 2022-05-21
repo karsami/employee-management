@@ -7,6 +7,9 @@ import { SideNavInnerToolbarModule, SideNavOuterToolbarModule, SingleCardModule 
 import { ChangePasswordFormModule, CreateAccountFormModule, FooterModule, LoginFormModule, ResetPasswordFormModule } from './shared/components';
 import { AppInfoService, AuthService, ScreenService } from './shared/services';
 import { UnauthenticatedContentModule } from './unauthenticated-content';
+import { RoleComponent } from './pages/role/role.component';
+import { UserRoleComponent } from './pages/user-role/user-role.component';
+import { DxToastModule } from 'devextreme-angular';
 
 
 @NgModule({
@@ -25,7 +28,8 @@ import { UnauthenticatedContentModule } from './unauthenticated-content';
     LoginFormModule,
     UnauthenticatedContentModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    DxToastModule
   ],
   providers: [
     AuthService,

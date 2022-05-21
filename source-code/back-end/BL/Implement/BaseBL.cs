@@ -32,7 +32,7 @@ namespace BLL.Implement
         {
             var sqlCommand = $"SELECT * FROM {_tableName}";
             var res = _baseDA.QueryUsingCommandText<T>(sqlCommand);
-            if (res.FirstOrDefault() != null)
+            if (res != null)
             {
                 _serviceResult = setServiceResult(true, res, Common.Properties.Resources.GetDataSuccess);
             }

@@ -45,6 +45,8 @@ namespace EmployeeManagementAPI
             services.AddScoped<IUserBL, UserBL>();
             services.AddScoped<IJobPositionBL, JobPositionBL>();
             services.AddScoped<IOrganizationUnitBL, OrganizationUnitBL>();
+            services.AddScoped<IRoleBL, RoleBL>();
+            services.AddScoped<IUserRole, UserRoleBL>();
 
             services.AddSwaggerGen(c =>
             {

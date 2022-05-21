@@ -7,3 +7,9 @@
 <ng-template #unauthenticated>
   <app-unauthenticated-content></app-unauthenticated-content>
 </ng-template>
+
+<ng-container *ngIf="dxToast.Visible">
+  <dx-toast [(visible)]="dxToast.Visible" [type]="dxToast.Type" [message]="dxToast.Message">
+
+  </dx-toast>
+</ng-container>
