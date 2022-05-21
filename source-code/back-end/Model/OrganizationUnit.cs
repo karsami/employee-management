@@ -16,6 +16,6 @@ namespace Model
         public string OrgCode { get; set; }
         public string Address { get; set; }
         public string Description { get; set; }
-        public int ParentID { get; set; }
+        public int? ParentID { get; set; }
     }
 }

@@ -1,76 +1,56 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DxDataGridComponent } from 'devextreme-angular';
-import { positions, organizationUnits } from 'src/app/shared/mock-data/mock-data';
+import { forkJoin } from 'rxjs';
+import { BaseGridComponent } from 'src/app/shared/components/base-grid.component';
 import { JobPositionService } from 'src/app/shared/services/api/job-position.service';
+import { OrganizationUnitService } from 'src/app/shared/services/api/organization.service';
+import { TransferService } from 'src/app/shared/services/transfer.service';
 @Component({
   selector: 'app-positions',
   templateUrl: './positions.component.html',
   styleUrls: ['./positions.component.scss']
 })
-export class PositionsComponent implements OnInit {
+export class PositionsComponent extends BaseGridComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(DxDataGridComponent, { static: false }) dataGrid!: DxDataGridComponent;
 
   dataSource: any[] = [];
-  selectedItemKeys: any[] = [];
   organizations: any[] = [];
 
-  constructor(private _positionService: JobPositionService) {
-    this.organizations = organizationUnits;
+  constructor(private _positionService: JobPositionService,
+    private _organizationUnitService: OrganizationUnitService,
+    public _transferService: TransferService) {
+    super(_transferService);
+    this.service = _positionService;
+  }
+
+  ngAfterViewInit(): void {
+    this.baseDataGrid = this.dataGrid;
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe())
   }
 
   ngOnInit(): void {
     this.loadData();
   }
 
-  loadData() {
-    const sub = this._positionService.getData().subscribe(res => {
-      if (res && res.Success) {
-        this.dataSource = res.Data;
-      } else {
-        this.dataSource = positions;
+  override loadData() {
+    const positions = this._positionService.getData();
+    const orgs = this._organizationUnitService.getData();
+    const sub = forkJoin([positions, orgs]).subscribe(res => {
+      if (res[0] && res[0].Success) {
+        this.dataSource = res[0].Data;
       }
-      sub.unsubscribe();
-    })
-  }
 
-  /**
-   * Handle get selected data key express
-   */
-  selectionChanged(data: any) {
-    this.selectedItemKeys = data.selectedRowKeys;
-  }
-
-  /**
-   * Hanlde call API insert employee info
-   */
-  onInserting(event: any) {
-    const sub = this._positionService.insertData(event.data).subscribe(res => {
-      this.loadData();
-      sub.unsubscribe();
+      if (res[1] && res[1].Success) {
+        this.organizations = res[1].Data;
+      }
+      
     });
+    this.subscriptions.push(sub);
   }
 
-  /**
-   * Handle call API update employee info
-   * @param event
-   */
-  onUpdating(event: any) {
-    const param = Object.assign(event.oldData, event.newData);
-    const sub = this._positionService.updateData(param).subscribe(res => {
-      this.loadData();
-      sub.unsubscribe();
-    })
-  }
-
-
-  /**
-   * Delete all data selected in grid
-   */
-  deleteRecords() {
-    this._positionService.deleteMultiple(this.selectedItemKeys).subscribe(res => {
-      this.loadData();
-      this.dataGrid.instance.refresh();
-    })
-  }
+ 
 
 }

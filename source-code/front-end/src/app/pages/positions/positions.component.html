@@ -1,8 +1,9 @@
 <div class="content-block">
     <h2>Vị trí công việc</h2>
     <dx-data-grid id="grid-position" class="dx-card wide-card" [dataSource]="dataSource" [showBorders]="true"
-        [focusedRowEnabled]="true" [columnAutoWidth]="true" [keyExpr]="'JobPositionID'" [allowColumnResizing]="true"
-        columnResizingMode="widget" (onSelectionChanged)="selectionChanged($event)">
+        [columnAutoWidth]="true" [keyExpr]="'JobPositionID'" [allowColumnResizing]="true" columnResizingMode="widget"
+        (onSelectionChanged)="selectionChanged($event)" (onRowInserting)="onInserting($event)"
+        (onRowUpdating)="onUpdating($event)" (onRowRemoving)="onRemoving($event)">
         <dxo-toolbar>
             <dxi-item name="addRowButton">
             </dxi-item>
@@ -38,7 +39,7 @@
         <dxo-search-panel [visible]="true" [width]="300"></dxo-search-panel>
         <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
         <dxo-export [enabled]="true"></dxo-export>
-        <dxo-editing [allowAdding]="true" [allowUpdating]="true" [allowDeleting]="true" mode="popup">
+        <dxo-editing [allowAdding]="true" [allowUpdating]="true" [allowDeleting]="true" [confirmDelete]="true" mode="popup">
             <dxo-popup title="Vị trí công việc" [showTitle]="true">
             </dxo-popup>
         </dxo-editing>

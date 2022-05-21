@@ -1,8 +1,11 @@
 <div class="content-block">
     <h2>Cơ cấu tổ chức</h2>
     <dx-tree-list id="tree-list-organization" [dataSource]="dataSource"
-        [rootValue]="'00000000-0000-0000-0000-000000000000'" keyExpr="OrganizationUnitID" parentIdExpr="ParentID"
-        [showRowLines]="true" [showBorders]="true" [columnAutoWidth]="true">
+        [rootValue]="null" keyExpr="OrganizationUnitID" parentIdExpr="ParentID"
+        [showRowLines]="true" [showBorders]="true" [columnAutoWidth]="true" 
+        (onRowInserting)="onInserting($event)" 
+        (onRowUpdating)="onUpdating($event)"
+        (onRowRemoving)="onDeleting($event)">
 
         <!-- columns -->
         <dxi-column dataField="OrganizationUnitName" caption="Tên cơ cấu tổ chức">
@@ -13,7 +16,8 @@
         <dxi-column dataField="Description" caption="Mô tả"></dxi-column>
 
         <!-- options -->
-        <dxo-editing mode="row" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true"></dxo-editing>
+        <dxo-editing mode="row" [allowUpdating]="true" [allowDeleting]="true" [confirmDelete]="true" [allowAdding]="true"></dxo-editing>
+        <dxo-column-fixing enabled="true"></dxo-column-fixing>
         <dxo-search-panel [visible]="true" [width]="200"></dxo-search-panel>
     </dx-tree-list>
 </div>

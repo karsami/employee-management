@@ -4,7 +4,7 @@ import { EventEmitter, Injectable, Output } from "@angular/core";
     providedIn: 'root'
 })
 
-export class TransferDataService {
+export class TransferService {
 
     @Output() showToast = new EventEmitter<any>();
     handleShowToast(type: string, message: string) {

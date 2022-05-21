@@ -16,37 +16,37 @@ export const employees = [
 
 export const organizationUnits = [
     {
-        "OrganizationUnitID": "0217b3a3-902f-4dca-a3c5-86d6cb5a8e9f",
+        "OrganizationUnitID": "1",
         "OrganizationUnitName": "Văn phòng tổng công ty",
-        "ParentID": "00000000-0000-0000-0000-000000000000",
+        "ParentID": "null",
         "Address": "826 Campus Place, Salunga, Pennsylvania, 4458",
         "Description": "Văn phòng tổng công ty"
     },
     {
-        "OrganizationUnitID": "f964ea2e-54bc-4b22-a644-8ab10f1077e1",
+        "OrganizationUnitID": "2",
         "OrganizationUnitName": "Khối sản xuất",
-        "ParentID": "0217b3a3-902f-4dca-a3c5-86d6cb5a8e9f",
+        "ParentID": "1",
         "Address": "180 Rutherford Place, Libertytown, Connecticut, 8252",
         "Description": "Bao gồm Trung tâm phát triển phần mềm và Viện Nghiên cứu"
     },
     {
-        "OrganizationUnitID": "c38b16e8-05bd-4391-aafc-c091ba28f44c",
+        "OrganizationUnitID": "3",
         "OrganizationUnitName": "Trung tâm phát triển phần mềm",
-        "ParentID": "f964ea2e-54bc-4b22-a644-8ab10f1077e1",
+        "ParentID": "2",
         "Address": "747 Jefferson Avenue, Bloomington, South Carolina, 6064",
         "Description": "Phát triển phần mềm: web app, desktop app"
     },
     {
-        "OrganizationUnitID": "e41b1dc2-174d-498f-84c6-80b12ffa475c",
+        "OrganizationUnitID": "4",
         "OrganizationUnitName": "Viện nghiên cứu và đào tạo",
-        "ParentID": "f964ea2e-54bc-4b22-a644-8ab10f1077e1",
+        "ParentID": "2",
         "Address": "230 Carlton Avenue, Hiwasse, Kansas, 531",
         "Description": "Nghiên cứu các công nghệ: AI, Big Data"
     },
     {
-        "OrganizationUnitID": "5620d644-8f91-4b96-9fe0-6736894fb42b",
+        "OrganizationUnitID": "5",
         "OrganizationUnitName": "Phòng nhân sự",
-        "ParentID": "0217b3a3-902f-4dca-a3c5-86d6cb5a8e9f",
+        "ParentID": "1",
         "Address": "375 Seigel Court, Jenkinsville, Nevada, 9112"
     }
 ]

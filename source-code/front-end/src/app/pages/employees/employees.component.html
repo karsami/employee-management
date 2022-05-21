@@ -1,9 +1,9 @@
 <div class="content-block">
     <h2>Nhân viên</h2>
     <dx-data-grid id="grid-employee" class="dx-card wide-card" [dataSource]="dataSource" [showBorders]="false"
-        [focusedRowEnabled]="true" [columnAutoWidth]="false" [keyExpr]="'UserID'" [allowColumnResizing]="true"
-        columnResizingMode="widget" (onSelectionChanged)="selectionChanged($event)" [columnMinWidth]="180"
-        (onRowUpdating)="onUpdating($event)" (onRowInserting)="onInserting($event)">
+        [columnAutoWidth]="false" [keyExpr]="'UserID'" [allowColumnResizing]="true" columnResizingMode="widget"
+        (onSelectionChanged)="selectionChanged($event)" [columnMinWidth]="180" (onRowUpdating)="onUpdating($event)"
+        (onRowInserting)="onInserting($event)">
 
         <!-- toolbar -->
         <dxo-toolbar>
@@ -25,7 +25,7 @@
         <dxi-column dataField="FullName" caption="Họ và tên" width="150">
             <dxi-validation-rule type="required"></dxi-validation-rule>
         </dxi-column>
-       
+
         <dxi-column dataField="IdentityNumber" caption="Số CMT">
         </dxi-column>
         <dxi-column dataField="IdentityDate" caption="Ngày cấp" dataType="date" format="dd/MM/yyyy">
@@ -43,8 +43,9 @@
             <dxi-validation-rule type="email"></dxi-validation-rule>
         </dxi-column>
         <dxi-column dataField="BirthDay" caption="Ngày sinh" dataType="date" format="dd/MM/yyyy"></dxi-column>
-        <dxi-column dataField="Address" caption="Địa chỉ"></dxi-column>
-        <dxi-column dataField="JobPositionID" caption="Chức vụ">
+        <dxi-column dataField="CurrentAddress" caption="Địa chỉ hiện tại"></dxi-column>
+        <dxi-column dataField="NativeAddress" caption="Quê quán"></dxi-column>
+        <dxi-column dataField="JobPositionID" caption="Vị trí công việc">
             <dxo-lookup [dataSource]="positions" valueExpr="JobPositionID" displayExpr="JobPositionName">
             </dxo-lookup>
         </dxi-column>
@@ -53,7 +54,9 @@
                 displayExpr="OrganizationUnitName">
             </dxo-lookup>
         </dxi-column>
-        
+
+        <dxi-column dataField="EthicName" caption="Tôn giáo"></dxi-column>
+        <dxi-column dataField="ReligionName" caption="Dân tộc"></dxi-column>
         <dxi-column dataField="HireDate" caption="Ngày tuyển" dataType="date" format="dd/MM/yyyy"></dxi-column>
 
         <!-- option -->
@@ -73,7 +76,9 @@
 
         <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
 
-        <dxo-editing [allowAdding]="true" [allowUpdating]="true" mode="popup">
+        <dxo-column-fixing enabled="true"></dxo-column-fixing>
+
+        <dxo-editing [allowAdding]="true" [allowUpdating]="true" [allowDeleting]="true" [confirmDelete]="true" mode="popup">
             <dxo-popup title="Thông tin nhân viên" [showTitle]="true">
             </dxo-popup>
         </dxo-editing>

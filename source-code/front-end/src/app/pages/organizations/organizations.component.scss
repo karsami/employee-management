@@ -3,3 +3,10 @@
         height: calc(100vh - 190px);
     }
 }
+
+:host ::ng-deep {
+    td {  
+        border-left-style: none !important;  
+        border-right-style: none !important;  
+    } 
+}

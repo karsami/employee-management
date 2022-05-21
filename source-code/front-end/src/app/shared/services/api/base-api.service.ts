@@ -30,7 +30,7 @@ export class BaseService {
     }
 
     deleteByID(id: any): Observable<ServerResponse> {
-        return this.http.delete<ServerResponse>(`${this.getApiUrl()}${id}`);
+        return this.http.delete<ServerResponse>(`${this.getApiUrl()}/${id}`);
     }
 
     deleteMultiple(ids: any[]): Observable<ServerResponse> {

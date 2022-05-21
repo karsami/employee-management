@@ -127,7 +127,7 @@ namespace BLL.Implement
 
         public ServiceResult DeleteData(int id)
         {
-            var sqlCommand = $"DELETE FROM {_tableName} WHERE id = @id";
+            var sqlCommand = $"DELETE FROM {_tableName} WHERE {GetPrimaryKeyName()} = @id";
             var param = new Dictionary<string, object>();
             param.Add("@id", id);
             var res = _baseDA.ExecuteUsingCommandText(sqlCommand, param);

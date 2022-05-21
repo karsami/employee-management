@@ -2,7 +2,7 @@ import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { AppInfoService, AuthService, ScreenService } from './shared/services';
 import viMessage from 'devextreme/localization/messages/vi.json';
 import { locale, loadMessages } from "devextreme/localization";
-import { TransferDataService } from './shared/services/transfer.service';
+import { TransferService } from './shared/services/transfer.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -24,7 +24,7 @@ export class AppComponent implements OnInit, OnDestroy {
     return Object.keys(this.screen.sizes).filter(cl => this.screen.sizes[cl]).join(' ');
   }
 
-  constructor(private authService: AuthService, private screen: ScreenService, public appInfo: AppInfoService, public transferDataService: TransferDataService) {
+  constructor(private authService: AuthService, private screen: ScreenService, public appInfo: AppInfoService, public transferDataService: TransferService) {
     const language = 'vi';
     loadMessages(viMessage);
     locale(language);

@@ -1,78 +1,87 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DxDataGridComponent } from 'devextreme-angular';
-import { RowInsertingEvent, RowUpdatingEvent } from 'devextreme/ui/data_grid';
-import { Subscription } from 'rxjs';
+import { forkJoin } from 'rxjs';
+import { BaseGridComponent } from 'src/app/shared/components/base-grid.component';
+import { OrganizationUnitService } from 'src/app/shared/services/api/organization.service';
+import { RoleService } from 'src/app/shared/services/api/role.service';
 import { UserRoleService } from 'src/app/shared/services/api/user-role.service';
-import { TransferDataService } from 'src/app/shared/services/transfer.service';
+import { UserService } from 'src/app/shared/services/api/user.service';
+import { TransferService } from 'src/app/shared/services/transfer.service';
 
 @Component({
   selector: 'app-user-role',
   templateUrl: './user-role.component.html',
   styleUrls: ['./user-role.component.scss']
 })
-export class UserRoleComponent implements OnInit, OnDestroy {
+export class UserRoleComponent extends BaseGridComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild(DxDataGridComponent, { static: false }) dataGrid!: DxDataGridComponent;
 
   dataSource: any[] = [];
-  selectedItemKeys: any[] = [];
-  subsriptions: Subscription[] = [];
+  roles: any[] = [];
+  users: any[] = [];
+  organizationUnits: any[] = [];
+  listStatus: any[] = [];
 
-  constructor(private userRoleService: UserRoleService, private transferDataService: TransferDataService) { }
+  constructor(private _userRoleService: UserRoleService,
+    private _roleService: RoleService,
+    private _userService: UserService,
+    private _organizationUnitService: OrganizationUnitService,
+    public transferService: TransferService) {
+    super(transferService);
+    this.service = _userRoleService;
+    this.listStatus = [
+      {
+        value: 1,
+        text: 'Đang hoạt động'
+      },
+      {
+        value: 2,
+        text: 'Chờ xác nhận'
+      },
+      {
+        value: 3,
+        text: 'Ngừng hoạt động'
+      },
+    ];
+  }
+
+  ngAfterViewInit(): void {
+    this.baseDataGrid = this.dataGrid;
+  }
 
   ngOnDestroy(): void {
-    this.subsriptions.forEach(res => res.unsubscribe());
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
   ngOnInit(): void {
     this.loadData();
   }
 
-  loadData() {
-    this.userRoleService.getData().subscribe(res => {
-      if (res && res.Success) {
-        this.dataSource = res.Data;
+  override loadData() {
+    const userRoles = this._userRoleService.getData();
+    const roles = this._roleService.getData();
+    const users = this._userService.getData();
+    const organizationUnits = this._organizationUnitService.getData();
+    const sub = forkJoin([userRoles, roles, users, organizationUnits]).subscribe(res => {
+      if (res[0] && res[0].Success) {
+        this.dataSource = res[0].Data;
       }
+
+      if (res[1] && res[1].Success) {
+        this.roles = res[1].Data;
+      }
+
+      if (res[2] && res[2].Success) {
+        this.users = res[2].Data;
+      }
+
+      if (res[3] && res[3].Success) {
+        this.organizationUnits = res[3].Data;
+      }
+      
     });
+    this.subscriptions.push(sub);
   }
 
-  onInserting(event: RowInsertingEvent) {
-    const sub = this.userRoleService.insertData(event.data).subscribe(res => {
-      if (res) {
-        this.loadData();
-        this.transferDataService.handleShowToast('success', 'Thêm người dùng thành công');
-      } else {
-        this.transferDataService.handleShowToast('error', 'Thêm người dùng thất bại');
-      }
-    });
-    this.subsriptions.push(sub)
-  }
-
-  onUpdating(event: RowUpdatingEvent) {
-    const data = Object.assign(event.oldData, event.newData);
-    const sub = this.userRoleService.updateData(data).subscribe(res => {
-      if (res && res.Success) {
-        this.loadData();
-        this.transferDataService.handleShowToast('success', 'Cập nhật người dùng thành công');
-      } else {
-        this.transferDataService.handleShowToast('error', 'Cập nhật người dùng thất bại');
-      }
-    });
-    this.subsriptions.push(sub)
-  }
-
-  selectionChanged(data: any) {
-    this.selectedItemKeys = data.selectedRowKeys;
-  }
-
-  deleteRecords() {
-    const sub = this.userRoleService.deleteMultiple(this.selectedItemKeys).subscribe(res => {
-      if (res && res.Success) {
-        this.loadData();
-        this.dataGrid.instance.refresh();
-        this.transferDataService.handleShowToast('success', 'Xoá người dùng thành công');
-      }
-    });
-    this.subsriptions.push(sub);
-  }
 }

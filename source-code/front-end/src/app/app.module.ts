@@ -1,15 +1,13 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { DxToastModule } from 'devextreme-angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SideNavInnerToolbarModule, SideNavOuterToolbarModule, SingleCardModule } from './layouts';
 import { ChangePasswordFormModule, CreateAccountFormModule, FooterModule, LoginFormModule, ResetPasswordFormModule } from './shared/components';
 import { AppInfoService, AuthService, ScreenService } from './shared/services';
 import { UnauthenticatedContentModule } from './unauthenticated-content';
-import { RoleComponent } from './pages/role/role.component';
-import { UserRoleComponent } from './pages/user-role/user-role.component';
-import { DxToastModule } from 'devextreme-angular';
 
 
 @NgModule({

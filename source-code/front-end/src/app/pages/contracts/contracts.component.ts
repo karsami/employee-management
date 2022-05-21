@@ -1,25 +1,26 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DxDataGridComponent } from 'devextreme-angular';
-import { RowInsertingEvent, RowUpdatingEvent } from 'devextreme/ui/data_grid';
-import { Subscriber, Subscription } from 'rxjs';
-import { contracts } from 'src/app/shared/mock-data/mock-data';
+import { forkJoin } from 'rxjs';
+import { BaseGridComponent } from 'src/app/shared/components/base-grid.component';
 import { ContractService } from 'src/app/shared/services/api/contract.service';
+import { UserService } from 'src/app/shared/services/api/user.service';
+import { TransferService } from 'src/app/shared/services/transfer.service';
 
 @Component({
   selector: 'app-contracts',
   templateUrl: './contracts.component.html',
   styleUrls: ['./contracts.component.scss']
 })
-export class ContractsComponent implements OnInit, OnDestroy {
+export class ContractsComponent extends BaseGridComponent implements OnInit, OnDestroy, AfterViewInit {
+
   @ViewChild(DxDataGridComponent, { static: false }) dataGrid!: DxDataGridComponent;
 
   dataSource: any[] = [];
   contractTypes: any[] = [];
-  selectedItemKeys: any[] = [];
-  subscriptions: Subscription[] = [];
+  users: any[] = [];
 
-  constructor(private _contractService: ContractService) {
-    this.dataSource = contracts;
+  constructor(private _contractService: ContractService, private _userService: UserService, public _transferService: TransferService) {
+    super(_transferService);
     this.contractTypes = [
       {
         value: 1,
@@ -27,62 +28,38 @@ export class ContractsComponent implements OnInit, OnDestroy {
       },
       {
         value: 2,
-        text: 'Không xác định'
+        text: 'Không xác định thời hạn'
       }
     ];
+    this.service = _contractService;
+  }
+
+  ngAfterViewInit(): void {
+    this.baseDataGrid = this.dataGrid;
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach(item => item.unsubscribe)
+    this.subscriptions.forEach(sub => sub.unsubscribe)
   }
 
   ngOnInit(): void {
     this.loadData();
   }
 
-  loadData() {
-    const sub = this._contractService.getData().subscribe(res => {
-      if (res && res.Success) {
-        this.dataSource = res.Data;
+  override loadData() {
+    const contracts = this._contractService.getData();
+    const users = this._userService.getData();
+    const sub = forkJoin([contracts, users]).subscribe(res => {
+      if (res[0] && res[0].Success) {
+        this.dataSource = res[0].Data;
+      }
+
+      if (res[1] && res[1].Success) {
+        this.users = res[1].Data;
       }
     })
     this.subscriptions.push(sub);
   }
 
-  selectionChanged(data: any) {
-    this.selectedItemKeys = data.selectedRowKeys;
-  }
-
-  /**
-  * Hanlde call API insert employee info
-  */
-  onInserting(event: RowInsertingEvent) {
-    const sub = this._contractService.insertData(event.data).subscribe(res => {
-      this.loadData();
-    });
-    this.subscriptions.push(sub);
-  }
-
-  /**
-   * Handle call API update employee info
-   * @param event
-   */
-  onUpdating(event: RowUpdatingEvent) {
-    const param = Object.assign(event.oldData, event.newData);
-    const sub = this._contractService.updateData(param).subscribe(res => {
-      this.loadData();
-    });
-    this.subscriptions.push(sub);
-  }
-
-  /**
-   * Delete all data selected in grid
-   */
-  deleteRecords() {
-    this._contractService.deleteMultiple(this.selectedItemKeys).subscribe(res => {
-      this.loadData();
-      this.dataGrid.instance.refresh();
-    })
-  }
 
 }

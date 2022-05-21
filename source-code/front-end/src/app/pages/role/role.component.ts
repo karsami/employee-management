@@ -3,7 +3,7 @@ import { DxDataGridComponent } from 'devextreme-angular';
 import { RowInsertingEvent, RowUpdatingEvent } from 'devextreme/ui/data_grid';
 import { Subscription } from 'rxjs';
 import { RoleService } from 'src/app/shared/services/api/role.service';
-import { TransferDataService } from 'src/app/shared/services/transfer.service';
+import { TransferService } from 'src/app/shared/services/transfer.service';
 
 @Component({
   selector: 'app-role',
@@ -18,7 +18,7 @@ export class RoleComponent implements OnInit, OnDestroy {
   selectedItemKeys: any[] = [];
   subsriptions: Subscription[] = [];
 
-  constructor(private roleService: RoleService, private transferDataService: TransferDataService) { }
+  constructor(private roleService: RoleService, private transferDataService: TransferService) { }
 
   ngOnDestroy(): void {
     this.subsriptions.forEach(res => res.unsubscribe());
