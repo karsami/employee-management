@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { RowInsertingEvent, RowRemovingEvent, RowUpdatingEvent } from 'devextreme/ui/tree_list';
 import { Subscription } from 'rxjs';
 import { ServerResponse } from 'src/app/shared/entities/server-response';
-import { organizationUnits } from 'src/app/shared/mock-data/mock-data';
 import { OrganizationUnitService } from 'src/app/shared/services/api/organization.service';
 import { TransferService } from 'src/app/shared/services/transfer.service';
 

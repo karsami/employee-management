@@ -2,7 +2,8 @@
     <h2>Vai trò</h2>
     <dx-data-grid id="grid-role" class="dx-card wide-card" [dataSource]="dataSource" [showBorders]="false"
         [columnAutoWidth]="false" [keyExpr]="'RoleID'" (onSelectionChanged)="selectionChanged($event)"
-        [columnMinWidth]="180" (onRowUpdating)="onUpdating($event)" (onRowInserting)="onInserting($event)">
+        [columnMinWidth]="180" (onRowUpdating)="onUpdating($event)" (onRowInserting)="onInserting($event)"
+        (onRowRemoving)="onRemoving($event)">
 
         <!-- toolbar -->
         <dxo-toolbar>
@@ -38,7 +39,8 @@
 
         <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
 
-        <dxo-editing [allowAdding]="true" [allowUpdating]="true" [allowDeleting]="true" [confirmDelete]="true" mode="popup">
+        <dxo-editing [allowAdding]="true" [allowUpdating]="true" [allowDeleting]="true" [confirmDelete]="true"
+            mode="popup">
             <dxo-popup title="Vai trò" [showTitle]="true">
             </dxo-popup>
         </dxo-editing>

@@ -3,7 +3,7 @@
     <dx-data-grid id="grid-employee" class="dx-card wide-card" [dataSource]="dataSource" [showBorders]="false"
         [columnAutoWidth]="false" [keyExpr]="'UserID'" [allowColumnResizing]="true" columnResizingMode="widget"
         (onSelectionChanged)="selectionChanged($event)" [columnMinWidth]="180" (onRowUpdating)="onUpdating($event)"
-        (onRowInserting)="onInserting($event)">
+        (onRowInserting)="onInserting($event)" (onRowRemoving)="onRemoving($event)">
 
         <!-- toolbar -->
         <dxo-toolbar>
